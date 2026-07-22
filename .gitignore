@@ -1,0 +1,14 @@
+# Entorno virtual (específico de tu máquina, no debe subirse)
+learn_env/
+venv/
+.venv/
+
+# Cachés y bytecode de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos del sistema / editor
+.DS_Store
+.idea/
+.vscode/
