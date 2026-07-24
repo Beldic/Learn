@@ -23,7 +23,7 @@ class Learn:
         self.sesgo = sesgo  # Término independiente (para la suma pura no se usa).
         self.tasa = tasa    # Tasa de aprendizaje: tamaño del paso de corrección.
 
-    def entrenar(self, interaccion, minimo, maximo, escala):
+    def entrenar(self, interaccion, minimo, maximo, escala,logs):
         # Ajusta los pesos a base de equivocarse y corregirse.
         # - interaccion: cuántos ejemplos distintos verá.
         # - minimo/maximo: rango de los números con los que practica.
@@ -32,6 +32,8 @@ class Learn:
         self.minimo = minimo 
         self.maximo = maximo
         self.escala = escala
+        self.logs = logs
+        
 
 
 
@@ -62,13 +64,17 @@ class Learn:
                 # ¿Acierta? Por REDONDEO, no por igualdad exacta (pre es un float).
                 if (round(pre*escala) == round(obj*escala)):
 
-                    print(f" Interacción: {i} ¡ACIERTO! Objetivo: {obj} predicción: {pre}  error: {error} valor1: {ra} valor2: {rb} peso1: {self.w1} peso2: {self.w2} \n")
+                    if(not self.logs):
+
+                        print(f" Interacción: {i} ¡ACIERTO! Objetivo: {obj} predicción: {pre}  error: {error} valor1: {ra} valor2: {rb} peso1: {self.w1} peso2: {self.w2} \n")
 
                     break  # Ejemplo resuelto: pasamos al siguiente par.
 
                 else:
 
-                    print(f" Interacción: {i} ¡ERROR! Objetivo: {obj} predicción: {pre}  error: {error} valor1: {ra} valor2: {rb} peso1: {self.w1} peso2: {self.w2} \n")
+                    if(not self.logs):
+
+                        print(f" Interacción: {i} ¡ERROR! Objetivo: {obj} predicción: {pre}  error: {error} valor1: {ra} valor2: {rb} peso1: {self.w1} peso2: {self.w2} \n")
 
                     # FASE 5 · Corrección de pesos (descenso de gradiente):
                     #   nuevo_peso = peso + tasa * error * entrada

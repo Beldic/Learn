@@ -2,7 +2,7 @@ from learn import Learn
 
 neurona = Learn(0.0,0.0,0,0.005)
 
-neurona.entrenar(500,0,1000,1000)
+neurona.entrenar(500,0,1000,1000,True)
 
 
 
