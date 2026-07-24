@@ -23,14 +23,19 @@ class Learn:
         self.sesgo = sesgo  # Término independiente (para la suma pura no se usa).
         self.tasa = tasa    # Tasa de aprendizaje: tamaño del paso de corrección.
 
-    def entrenar(self, interaccion, minimo, maximo):
+    def entrenar(self, interaccion, minimo, maximo, escala):
         # Ajusta los pesos a base de equivocarse y corregirse.
         # - interaccion: cuántos ejemplos distintos verá.
         # - minimo/maximo: rango de los números con los que practica.
         #   OJO: rangos grandes exigen una 'tasa' más pequeña (o explota).
         self.interaccion = interaccion
-        self.min = minimo
-        self.max = maximo
+        self.minimo = minimo 
+        self.maximo = maximo
+        self.escala = escala
+
+
+
+
 
         error = 0  # Variable transitoria (no forma parte de la memoria del objeto).
 
@@ -39,8 +44,8 @@ class Learn:
         for i in range(interaccion):
 
             # FASE 1 · Entrada de datos: dos números al azar dentro del rango.
-            ra = random.randint(minimo, maximo)
-            rb = random.randint(minimo, maximo)
+            ra = random.randint(minimo, maximo) / escala
+            rb = random.randint(minimo, maximo) / escala
 
             # FASE 2 · Objetivo: la suma verdadera, la "respuesta correcta".
             obj = ra + rb
@@ -55,7 +60,7 @@ class Learn:
                 error = obj - pre
 
                 # ¿Acierta? Por REDONDEO, no por igualdad exacta (pre es un float).
-                if (round(pre) == round(obj)):
+                if (round(pre*escala) == round(obj*escala)):
 
                     print(f" Interacción: {i} ¡ACIERTO! Objetivo: {obj} predicción: {pre}  error: {error} valor1: {ra} valor2: {rb} peso1: {self.w1} peso2: {self.w2} \n")
 
@@ -75,5 +80,8 @@ class Learn:
         # INFERENCIA: aplica la regla ya aprendida a dos números nuevos.
         # Sin bucle, sin error, sin corrección: una multiplicación y una suma.
         # Recibe a/b por parámetro (reutilizable) y devuelve el resultado.
+        a = a / self.escala
+        b = b / self.escala
         res = self.w1*a + self.w2*b
+        res = res * self.escala
         return round(res)

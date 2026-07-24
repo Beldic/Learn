@@ -2,17 +2,17 @@ from learn import Learn
 
 neurona = Learn(0.0,0.0,0,0.005)
 
-neurona.entrenar(40,0,9)
+neurona.entrenar(500,0,1000,1000)
 
 
 
-print ("APRENDIENDO A SUMAR ENTRE 0 Y 9\n")
+print ("APRENDIENDO A SUMAR ENTRE 0 Y 1000\n")
 
 
 while True:
 
-    a = int(input("Introduce un primer número entre 0 y 9: "))
-    b = int(input("Introduce un segundo número entre 0 y 9: "))
+    a = int(input("Introduce un primer número entre 0 y 1000: "))
+    b = int(input("Introduce un segundo número entre 0 y 1000: "))
 
     res = neurona.usar(a,b)
 
